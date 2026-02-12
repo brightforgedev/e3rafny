@@ -60,15 +60,27 @@ background:#334155;
 transform:scale(1.03);
 }
 
-/* صندوق المسبحة */
+/* زر رجوع */
+.back{
+margin-top:25px;
+background:#facc15;
+color:black;
+border:none;
+padding:10px 20px;
+border-radius:12px;
+font-size:16px;
+}
+
+/* المسبحة */
 #tasbeehBox{
+display:none;
 margin-top:25px;
 padding:15px;
 border-top:1px solid #facc15;
 }
 
 #counter{
-font-size:38px;
+font-size:42px;
 color:#facc15;
 margin:15px 0;
 }
@@ -87,6 +99,14 @@ border:none;
 margin-top:10px;
 padding:8px 15px;
 border-radius:10px;
+color:white;
+}
+
+/* الأذكار */
+#azkarBox{
+display:none;
+padding:20px;
+line-height:2;
 }
 
 </style>
@@ -98,30 +118,46 @@ border-radius:10px;
 <div class="subtitle">اختبر أصحابك… وشوف مين فاهمك بجد 😄</div>
 
 <div class="menu">
-<button onclick="alert('قريبًا 👀')">👥 اعمل اختبار عن نفسك</button>
-<button onclick="alert('قريبًا 👀')">🧠 جرب اختبار صاحبك</button>
+<button onclick="location.href='create.html'">👥 اعمل اختبار عن نفسك</button>
+<button onclick="location.href='play.html'">🧠 جرب اختبار صاحبك</button>
 <button onclick="openTasbeeh()">📿 المسبحة (استغفار)</button>
 <button onclick="openAzkar()">🌅 الأذكار</button>
 </div>
 
 <!-- المسبحة -->
-<div id="tasbeehBox" style="display:none;">
+<div id="tasbeehBox">
 <h2>📿 استغفر الله</h2>
 <div id="counter">0</div>
 <button id="tasbeehBtn" onclick="tasbeeh()">استغفر الله</button>
 <br>
 <button id="resetBtn" onclick="resetTasbeeh()">تصفير</button>
+<br>
+<button class="back" onclick="closeAll()">⬅ رجوع</button>
+</div>
+
+<!-- الأذكار -->
+<div id="azkarBox">
+<h2>🌅 أذكار مختصرة</h2>
+
+<p>سبحان الله</p>
+<p>الحمد لله</p>
+<p>الله أكبر</p>
+<p>لا إله إلا الله</p>
+<p>لا حول ولا قوة إلا بالله</p>
+<p>اللهم صل على محمد</p>
+
+<button class="back" onclick="closeAll()">⬅ رجوع</button>
 </div>
 
 <script>
 
-/* حفظ العداد */
-let count=localStorage.getItem("tasbeehCount") || 0;
-document.getElementById("counter").innerText=count;
+/* المسبحة */
+let count = localStorage.getItem("tasbeehCount") || 0;
+document.getElementById("counter").innerText = count;
 
 function openTasbeeh(){
 document.getElementById("tasbeehBox").style.display="block";
-window.scrollTo(0,document.body.scrollHeight);
+document.getElementById("azkarBox").style.display="none";
 }
 
 function tasbeeh(){
@@ -136,8 +172,17 @@ document.getElementById("counter").innerText=count;
 localStorage.setItem("tasbeehCount",0);
 }
 
+/* الأذكار */
 function openAzkar(){
-alert("سيتم إضافة الأذكار في الخطوة القادمة ✨");
+document.getElementById("azkarBox").style.display="block";
+document.getElementById("tasbeehBox").style.display="none";
+}
+
+/* رجوع */
+function closeAll(){
+document.getElementById("tasbeehBox").style.display="none";
+document.getElementById("azkarBox").style.display="none";
+window.scrollTo(0,0);
 }
 
 </script>
