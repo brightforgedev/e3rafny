@@ -52,35 +52,26 @@ border:1px solid #facc15;
 background:#1e293b;
 color:white;
 cursor:pointer;
-transition:.3s;
 }
 
-.menu button:hover{
-background:#334155;
-transform:scale(1.03);
+/* الأقسام */
+.section{
+display:none;
+padding:20px;
 }
 
-/* زر رجوع */
 .back{
-margin-top:25px;
-background:#facc15;
-color:black;
-border:none;
+margin-top:20px;
 padding:10px 20px;
+background:#facc15;
+border:none;
 border-radius:12px;
 font-size:16px;
 }
 
 /* المسبحة */
-#tasbeehBox{
-display:none;
-margin-top:25px;
-padding:15px;
-border-top:1px solid #facc15;
-}
-
 #counter{
-font-size:42px;
+font-size:38px;
 color:#facc15;
 margin:15px 0;
 }
@@ -99,14 +90,6 @@ border:none;
 margin-top:10px;
 padding:8px 15px;
 border-radius:10px;
-color:white;
-}
-
-/* الأذكار */
-#azkarBox{
-display:none;
-padding:20px;
-line-height:2;
 }
 
 </style>
@@ -114,51 +97,62 @@ line-height:2;
 
 <body>
 
+<div id="home">
 <h1>💬 اعرفني</h1>
 <div class="subtitle">اختبر أصحابك… وشوف مين فاهمك بجد 😄</div>
 
 <div class="menu">
-<button onclick="location.href='create.html'">👥 اعمل اختبار عن نفسك</button>
-<button onclick="location.href='play.html'">🧠 جرب اختبار صاحبك</button>
-<button onclick="openTasbeeh()">📿 المسبحة (استغفار)</button>
-<button onclick="openAzkar()">🌅 الأذكار</button>
+<button onclick="show('create')">👥 اعمل اختبار عن نفسك</button>
+<button onclick="show('play')">🧠 جرب اختبار صاحبك</button>
+<button onclick="show('tasbeeh')">📿 المسبحة (استغفار)</button>
+<button onclick="show('azkar')">🌅 الأذكار</button>
+</div>
+</div>
+
+<!-- اختبار -->
+<div id="create" class="section">
+<h2>هنا هتنشئ اختبارك قريبًا ✨</h2>
+<button class="back" onclick="home()">رجوع</button>
+</div>
+
+<div id="play" class="section">
+<h2>هنا هتلعب اختبار صاحبك قريبًا ✨</h2>
+<button class="back" onclick="home()">رجوع</button>
 </div>
 
 <!-- المسبحة -->
-<div id="tasbeehBox">
+<div id="tasbeeh" class="section">
 <h2>📿 استغفر الله</h2>
 <div id="counter">0</div>
 <button id="tasbeehBtn" onclick="tasbeeh()">استغفر الله</button>
 <br>
 <button id="resetBtn" onclick="resetTasbeeh()">تصفير</button>
 <br>
-<button class="back" onclick="closeAll()">⬅ رجوع</button>
+<button class="back" onclick="home()">رجوع</button>
 </div>
 
 <!-- الأذكار -->
-<div id="azkarBox">
-<h2>🌅 أذكار مختصرة</h2>
-
-<p>سبحان الله</p>
-<p>الحمد لله</p>
-<p>الله أكبر</p>
-<p>لا إله إلا الله</p>
-<p>لا حول ولا قوة إلا بالله</p>
-<p>اللهم صل على محمد</p>
-
-<button class="back" onclick="closeAll()">⬅ رجوع</button>
+<div id="azkar" class="section">
+<h2>🌅 أذكار الصباح والمساء قريبًا</h2>
+<button class="back" onclick="home()">رجوع</button>
 </div>
 
 <script>
 
-/* المسبحة */
-let count = localStorage.getItem("tasbeehCount") || 0;
-document.getElementById("counter").innerText = count;
-
-function openTasbeeh(){
-document.getElementById("tasbeehBox").style.display="block";
-document.getElementById("azkarBox").style.display="none";
+function show(id){
+document.getElementById("home").style.display="none";
+document.querySelectorAll(".section").forEach(e=>e.style.display="none");
+document.getElementById(id).style.display="block";
 }
+
+function home(){
+document.querySelectorAll(".section").forEach(e=>e.style.display="none");
+document.getElementById("home").style.display="block";
+}
+
+/* المسبحة */
+let count=localStorage.getItem("tasbeehCount") || 0;
+document.getElementById("counter").innerText=count;
 
 function tasbeeh(){
 count++;
@@ -170,19 +164,6 @@ function resetTasbeeh(){
 count=0;
 document.getElementById("counter").innerText=count;
 localStorage.setItem("tasbeehCount",0);
-}
-
-/* الأذكار */
-function openAzkar(){
-document.getElementById("azkarBox").style.display="block";
-document.getElementById("tasbeehBox").style.display="none";
-}
-
-/* رجوع */
-function closeAll(){
-document.getElementById("tasbeehBox").style.display="none";
-document.getElementById("azkarBox").style.display="none";
-window.scrollTo(0,0);
 }
 
 </script>
